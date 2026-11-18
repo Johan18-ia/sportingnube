@@ -1,0 +1,462 @@
+/* ============================================
+   UI KIT — Card, Table, PageHeader
+   Usa las variables de sporting-theme.css
+   ============================================ */
+
+/* ===== PAGE HEADER ===== */
+.ui-page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.ui-page-title {
+  margin: 0 0 6px 0;
+  font-size: 22px;
+  color: var(--sporting-text);
+  font-weight: 700;
+}
+
+.ui-page-description {
+  margin: 0;
+  color: var(--sporting-text-muted);
+  font-size: 14px;
+}
+
+.ui-page-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* ===== CARD ===== */
+.ui-card {
+  background: var(--sporting-white);
+  border: 1px solid var(--sporting-border);
+  border-radius: var(--sporting-radius-lg);
+  box-shadow: var(--sporting-shadow);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.ui-card-title {
+  margin: 0 0 14px 0;
+  font-size: 15px;
+  color: var(--sporting-red);
+  font-weight: 600;
+}
+
+/* ===== TABLE ===== */
+.ui-table-wrapper {
+  background: var(--sporting-white);
+  border-radius: var(--sporting-radius-lg);
+  border: 1px solid var(--sporting-border);
+  box-shadow: var(--sporting-shadow);
+  overflow: hidden;
+  overflow-x: auto;
+}
+
+.ui-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13.5px;
+}
+
+.ui-table thead th {
+  background: var(--sporting-red);
+  color: white;
+  text-align: left;
+  padding: 12px 15px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.ui-table tbody td {
+  padding: 12px 15px;
+  border-bottom: 1px solid var(--sporting-border);
+  color: var(--sporting-text);
+}
+
+.ui-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.ui-table tbody tr:hover {
+  background: var(--sporting-light-gray);
+}
+
+/* ===== FORM FIELDS (reutilizable dentro de Cards/Modales) ===== */
+.ui-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+
+.ui-field label {
+  font-size: 13px;
+  color: var(--sporting-text-muted);
+  font-weight: 500;
+}
+
+.ui-field input,
+.ui-field select,
+.ui-field textarea {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: var(--sporting-radius);
+  font-size: 14px;
+  font-family: inherit;
+}
+
+.ui-field input:focus,
+.ui-field select:focus,
+.ui-field textarea:focus {
+  outline: none;
+  border-color: var(--sporting-red);
+}
+
+.field-invalid,
+.ui-field .field-invalid {
+  border-color: #c82333 !important;
+  background-color: #fff5f5 !important;
+}
+
+.field-error-message {
+  display: block;
+  margin-top: 4px;
+  color: #b42318;
+  font-size: 12px;
+}
+
+.ui-btn-full {
+  width: 100%;
+}
+
+.ui-modal-body {
+  padding: 0 20px 20px 20px;
+}
+
+.password-field-control {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-field-control input {
+  width: 100%;
+  padding-right: 78px;
+}
+
+.password-visibility-button {
+  position: absolute;
+  right: 8px;
+  border: 0;
+  background: transparent;
+  color: var(--sporting-red);
+  cursor: pointer;
+  font: inherit;
+  font-size: 12px;
+}
+
+.password-visibility-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.password-form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+/* ===== STAT CARDS (Dashboard) ===== */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 18px;
+  margin-bottom: 28px;
+}
+
+.stat-card {
+  background: var(--sporting-white);
+  border: 1px solid var(--sporting-border);
+  border-radius: var(--sporting-radius-lg);
+  box-shadow: var(--sporting-shadow);
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.stat-card-icon {
+  width: 46px;
+  height: 46px;
+  min-width: 46px;
+  border-radius: var(--sporting-radius);
+  background: rgba(139, 0, 0, 0.08);
+  color: var(--sporting-red);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stat-card-icon svg {
+  width: 22px;
+  height: 22px;
+}
+
+.stat-card-body h3 {
+  margin: 0 0 2px 0;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--sporting-text);
+}
+
+.stat-card-body p {
+  margin: 0;
+  font-size: 13px;
+  color: var(--sporting-text-muted);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.stat-card-note {
+  font-size: 10px;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: #999;
+  background: var(--sporting-light-gray);
+  padding: 2px 6px;
+  border-radius: 20px;
+}
+
+/* ===== SUMMARY LIST (reemplaza la lista con emojis) ===== */
+.ui-summary-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ui-summary-list li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  color: var(--sporting-text);
+}
+
+.ui-summary-list .dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--sporting-red);
+  flex-shrink: 0;
+}
+
+/* ===== ACCOUNT INFO (reemplaza el bloque de auth con emojis) ===== */
+.ui-account-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--sporting-border);
+  font-size: 13.5px;
+}
+
+.ui-account-row:last-child {
+  border-bottom: none;
+}
+
+.ui-account-row .label {
+  color: var(--sporting-text-muted);
+}
+
+.ui-account-row .value {
+  color: var(--sporting-text);
+  font-weight: 600;
+}
+
+.panel-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.panel-summary-card {
+  background: var(--sporting-white);
+  border: 1px solid var(--sporting-border);
+  border-radius: var(--sporting-radius-lg);
+  box-shadow: var(--sporting-shadow);
+  padding: 18px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.panel-summary-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: rgba(139, 0, 0, 0.08);
+  color: var(--sporting-red);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+}
+
+.panel-summary-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.panel-summary-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--sporting-text);
+  line-height: 1;
+}
+
+.panel-summary-label {
+  font-size: 12px;
+  color: var(--sporting-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.view-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.view-filter {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.control-select,
+.control-input {
+  padding: 10px 12px;
+  border-radius: var(--sporting-radius);
+  border: 1px solid #d8d8d8;
+  background: white;
+  font-size: 14px;
+  color: var(--sporting-text);
+}
+
+.control-input {
+  min-width: 220px;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+}
+
+.pill-success {
+  background: rgba(16, 185, 129, 0.12);
+  color: #0a7f5a;
+}
+
+.pill-danger {
+  background: rgba(139, 0, 0, 0.12);
+  color: var(--sporting-red);
+}
+
+.status-dot {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+}
+
+.status-dot::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #10b981;
+}
+
+.status-dot.off::before {
+  background: #8B0000;
+}
+
+/* ===== TEAM STUDENT PICKER (Equipos) ===== */
+.team-student-picker {
+  max-height: 260px;
+  overflow-y: auto;
+  border: 1px solid var(--sporting-border);
+  border-radius: var(--sporting-radius);
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 16px;
+}
+
+.team-student-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: var(--sporting-radius);
+  cursor: pointer;
+  font-size: 13.5px;
+}
+
+.team-student-item:hover {
+  background: var(--sporting-light-gray);
+}
+
+.team-student-item.is-checked {
+  background: rgba(139, 0, 0, 0.07);
+}
+
+.team-student-item input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--sporting-red);
+}
+
+.team-student-item span {
+  display: flex;
+  flex-direction: column;
+}
+
+.team-student-item small {
+  color: var(--sporting-text-muted);
+  font-size: 11.5px;
+}
+
+.team-member-chip {
+  background: var(--sporting-light-gray);
+  border: 1px solid var(--sporting-border);
+  color: var(--sporting-text);
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 12.5px;
+}

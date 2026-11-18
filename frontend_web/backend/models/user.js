@@ -1,0 +1,195 @@
+// ====================================================
+// MODELO: USER
+// ====================================================
+const db = require('../config/config');
+const bcrypt = require('bcryptjs');
+
+const User = {};
+
+// ====================================================
+// LISTAR TODOS LOS USUARIOS
+// ====================================================
+User.findAll = (result) => {
+    const sql = `
+        SELECT id, email, name, lastname, phone, image, role, user_type, is_active, created_at, updated_at
+        FROM users ORDER BY id DESC
+    `;
+    db.query(sql, (err, users) => {
+        if (err) {
+            result(err, null);
+        } else {
+            result(null, users);
+        }
+    });
+};
+
+// ====================================================
+// BUSCAR USUARIO POR ID
+// ====================================================
+User.findById = (id, result) => {
+    const sql = `
+        SELECT id, email, name, lastname, phone, image, role, user_type, is_active, password, created_at, updated_at
+        FROM users WHERE id = ?
+    `;
+    db.query(sql, [id], (err, user) => {
+        if (err) {
+            result(err, null);
+        } else {
+            result(null, user[0]);
+        }
+    });
+};
+
+// ====================================================
+// BUSCAR USUARIO POR EMAIL
+// ====================================================
+User.findByEmail = (email, result) => {
+    const sql = `
+        SELECT u.id, u.email, u.name, u.lastname, u.phone, u.image, u.role, u.user_type, u.is_active, u.password,
+               sp.id AS student_profile_id,
+               sp.category_id AS student_category_id,
+               sp.status AS student_status,
+               c.category_year AS student_category_name
+        FROM users u
+        LEFT JOIN student_profiles sp ON sp.user_id = u.id
+        LEFT JOIN categories c ON c.id = sp.category_id
+        WHERE u.email = ?
+    `;
+    db.query(sql, [email], (err, user) => {
+        if (err) {
+            result(err, null);
+        } else {
+            result(null, user[0]);
+        }
+    });
+};
+
+// ====================================================
+// CREAR USUARIO
+// ====================================================
+User.create = async (user, result) => {
+    const hash = await bcrypt.hash(user.password, 10);
+    const validRoles = ['admin', 'seller', 'user'];
+    const role = validRoles.includes(user.role) ? user.role : 'user';
+    const validUserTypes = ['student', 'parent', 'none'];
+    const userType = validUserTypes.includes(user.user_type) ? user.user_type : 'none';
+
+    const sql = `
+        INSERT INTO users(name, lastname, email, password, phone, image, role, user_type, is_active, created_at, updated_at)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())
+    `;
+    db.query(sql, [
+        user.name,
+        user.lastname || '',
+        user.email,
+        hash,
+        user.phone || '',
+        user.image || '',
+        role,
+        userType,
+        user.is_active ?? 1
+    ], (err, res) => {
+        if (err) {
+            result(err, null);
+        } else {
+            result(null, { id: res.insertId, ...user });
+        }
+    });
+};
+
+// ====================================================
+// ACTUALIZAR USUARIO
+// ====================================================
+User.update = async (user, result) => {
+    let fields = [];
+    let values = [];
+
+    if (user.password) {
+        const hash = await bcrypt.hash(user.password, 10);
+        fields.push("password = ?");
+        values.push(hash);
+    }
+    if (user.email) {
+        fields.push("email = ?");
+        values.push(user.email);
+    }
+    if (user.name) {
+        fields.push("name = ?");
+        values.push(user.name);
+    }
+    if (user.lastname) {
+        fields.push("lastname = ?");
+        values.push(user.lastname);
+    }
+    if (user.phone) {
+        fields.push("phone = ?");
+        values.push(user.phone);
+    }
+    if (user.image) {
+        fields.push("image = ?");
+        values.push(user.image);
+    }
+    const validRoles = ['admin', 'seller', 'user'];
+    if (validRoles.includes(user.role)) {
+        fields.push("role = ?");
+        values.push(user.role);
+    }
+    if (user.user_type) {
+        fields.push("user_type = ?");
+        values.push(user.user_type);
+    }
+    if (Object.prototype.hasOwnProperty.call(user, 'is_active')) {
+        fields.push("is_active = ?");
+        values.push(user.is_active);
+    }
+
+    fields.push("updated_at = NOW()");
+    values.push(user.id);
+
+    const sql = `UPDATE users SET ${fields.join(", ")} WHERE id = ?`;
+    db.query(sql, values, (err, res) => {
+        if (err) {
+            result(err, null);
+        } else {
+            result(null, { id: user.id, ...user });
+        }
+    });
+};
+
+// ====================================================
+// ELIMINAR USUARIO
+// ====================================================
+User.delete = (id, result) => {
+    const sql = `DELETE FROM users WHERE id = ?`;
+    db.query(sql, [id], (err, res) => {
+        if (err) {
+            result(err, null);
+        } else {
+            result(null, res);
+        }
+    });
+};
+
+// ====================================================
+// CAMBIAR CONTRASEÑA DE UN USUARIO
+// ====================================================
+User.changePassword = async (userId, newPassword, result) => {
+    try {
+        const hash = await bcrypt.hash(newPassword, 10);
+        const sql = 'UPDATE users SET password = ?, updated_at = NOW() WHERE id = ?';
+        db.query(sql, [hash, userId], (err, response) => {
+            if (err) {
+                console.error('Error al cambiar contraseña:', err);
+                result(err, null);
+                return;
+            }
+
+            result(null, { id: userId, affectedRows: response.affectedRows });
+        });
+    } catch (error) {
+        console.error('Error al hashear contraseña:', error);
+        result(error, null);
+    }
+};
+
+module.exports = User;
